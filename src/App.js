@@ -83,7 +83,6 @@ class App extends Component {
           <h1>Google Book Search</h1>
         </header>
         <Form 
-<<<<<<< HEAD
           handleFilter={this.handleFilter}
           handleSearch={this.handleSearch} 
           state = {this.state}
@@ -91,20 +90,6 @@ class App extends Component {
         <List 
           books = {this.state.books}
         />
-=======
-        handleFilter={this.handleFilter}
-        handleSearch={this.handleSearch} />
-        
-        {books.map((book, i) => (
-          <List
-          key={book.id}
-          id = {book.id}
-          
-          />
-        ))}
-        
-        
->>>>>>> 1485a421f10cccf38dc5220b6dcb72dacf4e8ca9
       </div>
     );
   }
