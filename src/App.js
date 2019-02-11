@@ -8,12 +8,10 @@ class App extends Component {
     super(props)
     this.state = {
       books: [],
-      searchTerm: '',
+      searchTerm: 'henry',
       isFilter: false,
-      filter: {
-        printType: '',
-        bookType: '',
-      },
+      printType: 'all',
+      bookType: null,
       searchLoading: false,
       error: null
     }
@@ -29,18 +27,20 @@ class App extends Component {
 
   handleSearch = (event) => {
     event.preventDefault();
-    const target = event.target;
-    console.log({[target.name]: target.value})
-    // this.setState({
-    //   searchTerm: target.searchTerm.value,
-
-    // })
+    this.setState({
+    searchTerm: event.target.searchTerm.value,
+    
+  })
+  console.log(this.state)
   }
 
   handleFilter = (event) => {
-    const {name, value} = event.target
-    console.log({[name]: value})
-
+    console.log(event)
+    
+    this.setState({
+      printType: event
+    })
+    console.log(this.state)
   }
 
   render() {
@@ -53,7 +53,9 @@ class App extends Component {
         <header className="App-header">
           <h1>Google Book Search</h1>
         </header>
-        <Form handleSearch={this.handleSearch} handleFilter={this.handleFilter} />
+        <Form 
+        handleFilter={this.handleFilter}
+        handleSearch={this.handleSearch} />
         {/* <List /> */}
       </div>
     );

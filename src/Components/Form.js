@@ -4,9 +4,6 @@ class Form extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchTerm: '',
-      printType: '',
-      bookType: '',
       filter: false
     }
   }
@@ -14,22 +11,23 @@ class Form extends Component {
 
   render() {
     return (
-      <div>
+    
       <form onSubmit={this.props.handleSearch}>
-        <label for="search">Search: </label>
-        <input name="searchTerm" id="search" type="text" placeholder="henry" />
+        <label>Search: 
+          <input name="searchTerm" ref="search" type="text" placeholder="henry" />
+        </label>
         <button type="submit" >Search</button>
-      </form>
+      
         <label>Print Type:
-          <select onChange={this.props.handleFilter} name="printType">
-            <option name="printType" value="all" selected>All</option>
-            <option name="printType" value="books">Books</option>
-            <option name="printType" value="magazines">Magazines</option>
+          <select name="printType" onChange={ (event) => this.props.handleFilter(event.target.value)}>
+            <option name="printType">All</option>
+            <option name="printType">Books</option>
+            <option name="printType">Magazines</option>
           </select>
         </label>
         <label>Book Type:
-          <select onChange={this.props.handleFilter} name="bookType">
-            <option name="bookType" value="" selected disabled>No filter</option>
+          <select name="bookType" onChange={ (event) => this.props.handleFilter(event.target.value)}>
+            <option name="bookType" value="no filter">No filter</option>
             <option name="bookType" value="ebooks">Ebooks</option>
             <option name="bookType" value="free-ebooks">Free Ebooks</option>
             <option name="bookType" value="full">Full</option>
@@ -37,7 +35,8 @@ class Form extends Component {
             <option name="bookType" value="partial">Partial</option>
           </select>
         </label>
-        </div>
+        </form>
+        
     )
   }
 
