@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Form from './Components/Form';
+// import List from './Components/List';
 import './App.css';
 
 class App extends Component {
@@ -8,12 +9,15 @@ class App extends Component {
     this.state = {
       books: [],
       searchTerm: '',
+      isFilter: false,
+      filter: {
+        printType: '',
+        bookType: '',
+      },
       searchLoading: false,
       error: null
     }
   }
-
-
 
   componentDidMount() {
     const url = 'https://www.googleapis.com/books/v1/volumes?q=';
@@ -21,12 +25,25 @@ class App extends Component {
       .then(res => res.ok ? res.json() : Promise.reject('Something went wrong'))
       .then(books => console.log(books))
       .catch(error => this.setState({error}))
+  }
+
+  handleSearch = (event) => {
+    event.preventDefault();
+    const target = event.target;
+    console.log({[target.name]: target.value})
+    // this.setState({
+    //   searchTerm: target.searchTerm.value,
+
+    // })
+  }
+
+  handleFilter = (event) => {
+    const {name, value} = event.target
+    console.log({[name]: value})
 
   }
 
   render() {
-    /* API key: AIzaSyArESBORraqwDE4MwVUjgGOHP7WDuf8ch0 */
-
     if (this.state.error) {
       return <div>Error: {this.state.error}</div>
     }
@@ -36,7 +53,8 @@ class App extends Component {
         <header className="App-header">
           <h1>Google Book Search</h1>
         </header>
-        <Form />
+        <Form handleSearch={this.handleSearch} handleFilter={this.handleFilter} />
+        {/* <List /> */}
       </div>
     );
   }
