@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Form from './Components/Form';
-// import List from './Components/List';
+import List from './Components/List';
 import './App.css';
 
 class App extends Component {
@@ -21,7 +21,12 @@ class App extends Component {
     const url = 'https://www.googleapis.com/books/v1/volumes?q=';
     fetch(`${url}history`)
       .then(res => res.ok ? res.json() : Promise.reject('Something went wrong'))
-      .then(books => console.log(books))
+      .then(books => {
+        this.setState({
+          books: books,
+          error: null
+        })
+      })
       .catch(error => this.setState({error}))
   }
 
@@ -36,7 +41,6 @@ class App extends Component {
 
   handleFilter = (event) => {
     console.log(event)
-    
     this.setState({
       printType: event
     })
@@ -48,6 +52,9 @@ class App extends Component {
       return <div>Error: {this.state.error}</div>
     }
     
+    const books = this.state.books
+    console.log(books)
+
     return (
       <div className="App">
         <header className="App-header">
@@ -56,7 +63,16 @@ class App extends Component {
         <Form 
         handleFilter={this.handleFilter}
         handleSearch={this.handleSearch} />
-        {/* <List /> */}
+        
+        {books.map((book, i) => (
+          <List
+          key={book.id}
+          id = {book.id}
+          
+          />
+        ))}
+        
+        
       </div>
     );
   }
