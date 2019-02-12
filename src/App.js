@@ -9,17 +9,13 @@ class App extends Component {
     this.state = {
       books: [],
       searchTerm: 'henry',
-
-      isFilter: false,
-      printType: 'all',
-      bookType: 'ebooks',
-
+      printType: '',
+      bookType: '',
       searchLoading: false,
       error: null
     }
   }
 
- 
   handleSearch = (event) => {
     event.preventDefault();
     this.setState({
@@ -27,18 +23,45 @@ class App extends Component {
     })
 
     const searchURL = 'https://www.googleapis.com/books/v1/volumes?';
-    const params = {
-      api_key: 'AIzaSyBkl_H8pJwA3U1G8xXjiul5xpmVS34NBR4',
-      q: this.state.searchTerm,
-      filter: this.state.bookType,
-      printType: this.state.printType
+    let url = `${searchURL}q=${this.state.searchTerm}`;
+
+    if(this.state.printType && this.state.bookType){
+      const params = {
+        api_key: 'AIzaSyBkl_H8pJwA3U1G8xXjiul5xpmVS34NBR4',
+        q: this.state.searchTerm,
+        filter: this.state.bookType,
+        printType: this.state.printType
+      }
+      const queryStr = Object.keys(params)
+                            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                            .join('&');
+
+      url = `${searchURL}?${queryStr}`;
+    } 
+
+    if (this.state.printType){
+        const params = {
+          api_key: 'AIzaSyBkl_H8pJwA3U1G8xXjiul5xpmVS34NBR4',
+          q: this.state.searchTerm,
+          printType: this.state.printType
+        }
+        const queryStr = Object.keys(params)
+                              .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                              .join('&');
+  
+        url = `${searchURL}?${queryStr}`;
+    } if (this.state.bookType){
+        const params = {
+          api_key: 'AIzaSyBkl_H8pJwA3U1G8xXjiul5xpmVS34NBR4',
+          q: this.state.searchTerm,
+          filter: this.state.bookType,
+        }
+        const queryStr = Object.keys(params)
+                              .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+                              .join('&');
+  
+        url = `${searchURL}?${queryStr}`;
     }
-
-    const queryStr = Object.keys(params)
-                           .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-                           .join('&');
-
-    const url = `${searchURL}?${queryStr}`;
 
     const options = {
       method: 'GET',
@@ -71,11 +94,8 @@ class App extends Component {
     if (this.state.error) {
       return <div>Error: {this.state.error}</div>
     } else if (this.state.searchLoading){
-      return <div>Laoding</div>
+      return <div>Laoding..</div>
     }
-    
-    const books = this.state.books
-    console.log(books)
 
     return (
       <div className="App">
@@ -95,4 +115,5 @@ class App extends Component {
   }
 }
 
-export default App;
+
+export default App

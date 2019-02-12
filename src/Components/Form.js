@@ -3,12 +3,11 @@ import React, {Component} from 'react';
 class Form extends Component {
   render() {
     return (
-  
       <form onSubmit={this.props.handleSearch}>
           <label>Search: 
-            <input name="searchTerm" ref="search" type="text" placeholder="henry" />
+            <input name="searchTerm" ref="search" type="text" placeholder="henry" required />
           </label>
-          <button type="submit" >Search</button>
+          <button type="submit">Search</button>
      
           <label>Print Type:
             <select name="printType" onChange={this.props.handleFilter}>
